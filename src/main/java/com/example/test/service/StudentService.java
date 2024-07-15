@@ -33,7 +33,7 @@ public String delete(@RequestParam Long studentId) {
                     .id(studentDto.getId())
                     .name(studentDto.getName())
                     .age(studentDto.getAge())
-                    .build;
+                    .build();
         }
     }
     return "Student updated successfully" ;
