@@ -1,9 +1,9 @@
 package com.example.test.controller;
 
-import com.example.test.dto.StudentDto;
+import com.example.test.Entity.StudentEntity;
+import com.example.test.dto.StudentRequestDto;
+import com.example.test.dto.StudentResponseDto;
 import com.example.test.service.StudentService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,24 +18,24 @@ public class StudentController {
      this.studentService = studentService;
  }
 
-    @GetMapping("/getStudent")
-    public List<StudentDto> getStudent(){
+    @GetMapping("/getAll")
+    public List<StudentResponseDto> getStudent(){
         return studentService.getAll();
 
     }
     @PostMapping("/create")
-    public String createStudent(@RequestBody StudentDto studentDto){
-    studentService.create(studentDto);
+    public String createStudent(@RequestBody StudentRequestDto studentRequestDto){
+    studentService.create(studentRequestDto);
     return "Student created";
     }
     @DeleteMapping("/delete")
-    public String deleteStudent(@RequestBody StudentDto studentDto){
-studentService.delete(studentDto.getId());
+    public String deleteStudent(@RequestBody StudentResponseDto studentResponseDto){
+studentService.delete(studentResponseDto.getId());
 return "Student deleted";
     }
     @PutMapping("/update{id}")
-    public String updateStudent(@PathVariable Long id,@RequestBody StudentDto studentDto){
-        studentService.update(id, studentDto);
+    public String updateStudent(@PathVariable Long id,@RequestBody StudentRequestDto studentRequestDto){
+        studentService.update(id, studentRequestDto);
         return "Student updated";
     }
 }
