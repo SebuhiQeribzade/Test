@@ -6,14 +6,9 @@ import com.example.test.dto.StudentResponseDto;
 import com.example.test.repository.StudentRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class StudentService {
@@ -33,19 +28,28 @@ List<StudentResponseDto> studentResponseDtos = new ArrayList<>();
                 .toList();
        return  list;
 }
-public String create(@RequestBody StudentRequestDto studentRequestDto) {
+public String create( StudentRequestDto studentRequestDto) {
     StudentEntity map=modelMapper.map(studentRequestDto,StudentEntity.class);
 
     studentRepository.save(map);
     return "Student created successfully";
 }
-public String delete(@RequestParam Long studentId) {
+
+public StudentResponseDto findById(Long id){
+    StudentEntity studentEntity = studentRepository.findById(id).orElseThrow();
+    StudentResponseDto map=modelMapper.map(studentEntity, StudentResponseDto.class);
+    return map;
+}
+
+
+
+
+public String delete( Long studentId) {
     StudentEntity studentEntity = studentRepository.findById(studentId).orElseThrow();
     studentRepository.delete(studentEntity);
     return "Student deleted successfully" ;
 }
-@PutMapping("/update{id}")
-    public String update(@PathVariable Long id, @RequestBody StudentRequestDto studentRequestDto) {
+    public String update(Long id,  StudentRequestDto studentRequestDto) {
     StudentEntity studentEntity = studentRepository.findById(id).orElseThrow();
     modelMapper.map(studentRequestDto, studentEntity);
     studentRepository.save(studentEntity);

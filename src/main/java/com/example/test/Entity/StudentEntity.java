@@ -3,6 +3,8 @@ package com.example.test.Entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Table(name = "/student")
 @Entity
 @Data
@@ -16,4 +18,11 @@ public class StudentEntity {
     private String name;
     @Column(name="age")
     private Integer age;
+
+    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+
+    private List<LessonEntity> lessonEntityList;
+
+    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    private List<TeacherEntity> teacherEntityList;
 }

@@ -28,6 +28,14 @@ public class StudentController {
     studentService.create(studentRequestDto);
     return "Student created";
     }
+
+    @GetMapping("/findById")
+    public StudentResponseDto findStudent(@PathVariable Long id){
+     StudentResponseDto byId=studentService.findById(id);
+     return byId;
+    }
+
+
     @DeleteMapping("/delete")
     public String deleteStudent(@RequestBody StudentResponseDto studentResponseDto){
 studentService.delete(studentResponseDto.getId());
