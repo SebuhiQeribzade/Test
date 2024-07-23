@@ -25,10 +25,10 @@ public class TeacherService {
                 .toList();
         return  list;
     }
-    public String create( TeacherDto teacherDto) {
+    public TeacherDto create( TeacherDto teacherDto) {
         TeacherEntity map=modelMapper.map(teacherDto,TeacherEntity.class);
 
-        teacherRepository.save(map);
-        return "Teacher created successfully";
+      return  modelMapper.map(teacherRepository.save(map),TeacherDto.class);
+
     }
 }

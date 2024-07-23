@@ -5,12 +5,12 @@ import lombok.*;
 
 import java.util.List;
 
-@Table(name = "/student")
+@Table(name = "student")
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class StudentEntity {
+public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -19,10 +19,9 @@ public class StudentEntity {
     @Column(name="age")
     private Integer age;
 
-    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "students")
+    private List<Lesson> lessonList;
 
-    private List<LessonEntity> lessonEntityList;
-
-    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "students")
     private List<TeacherEntity> teacherEntityList;
 }

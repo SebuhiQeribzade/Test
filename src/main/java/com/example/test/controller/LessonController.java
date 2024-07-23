@@ -20,8 +20,8 @@ public class LessonController {
         return lessonService.getAll();
     }
     @PostMapping("/create")
-    public String createLesson(@RequestBody LessonDto lessonDto){
-        lessonService.create(lessonDto);
-        return "Lesson created";
+    public LessonDto createLesson(@RequestBody LessonDto lessonDto){
+       return lessonService.create(lessonDto);
+
     }
 }

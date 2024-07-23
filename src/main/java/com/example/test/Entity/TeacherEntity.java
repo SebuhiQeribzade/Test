@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Table(name="/teacher")
 @Entity
 @AllArgsConstructor
@@ -13,10 +16,12 @@ import lombok.NoArgsConstructor;
 public class TeacherEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    Long Id;
     @Column(name = "name")
     private String name;
     @Column(name="age")
     private Integer age;
+    @ManyToMany
+    List<Student>students=new ArrayList<>();
 }
 

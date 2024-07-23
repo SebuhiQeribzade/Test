@@ -1,6 +1,5 @@
 package com.example.test.controller;
 
-import com.example.test.Entity.StudentEntity;
 import com.example.test.dto.StudentRequestDto;
 import com.example.test.dto.StudentResponseDto;
 import com.example.test.service.StudentService;
@@ -12,6 +11,7 @@ import java.util.List;
 @RequestMapping("/Student")
 
 public class StudentController {
+
 
  private final StudentService studentService;
  public StudentController(StudentService studentService) {
@@ -25,8 +25,7 @@ public class StudentController {
     }
     @PostMapping("/create")
     public String createStudent(@RequestBody StudentRequestDto studentRequestDto){
-    studentService.create(studentRequestDto);
-    return "Student created";
+   return studentService.create(studentRequestDto);
     }
 
     @GetMapping("/findById")
@@ -38,12 +37,12 @@ public class StudentController {
 
     @DeleteMapping("/delete")
     public String deleteStudent(@RequestBody StudentResponseDto studentResponseDto){
-studentService.delete(studentResponseDto.getId());
-return "Student deleted";
+return studentService.delete(studentResponseDto.getId());
+
     }
     @PutMapping("/update{id}")
     public String updateStudent(@PathVariable Long id,@RequestBody StudentRequestDto studentRequestDto){
-        studentService.update(id, studentRequestDto);
-        return "Student updated";
+    return     studentService.update(id, studentRequestDto);
+
     }
 }

@@ -1,7 +1,6 @@
 package com.example.test.service;
 
-import com.example.test.Entity.LessonEntity;
-import com.example.test.Entity.TeacherEntity;
+import com.example.test.Entity.Lesson;
 import com.example.test.dto.LessonDto;
 import com.example.test.dto.TeacherDto;
 import com.example.test.repository.LessonRepository;
@@ -15,6 +14,7 @@ import java.util.List;
 public class LessonService {
     private final LessonRepository lessonRepository;
     private final ModelMapper modelMapper;
+
     public LessonService(LessonRepository lessonRepository, ModelMapper modelMapper) {
         this.lessonRepository = lessonRepository;
         this.modelMapper = modelMapper;
@@ -23,16 +23,13 @@ public class LessonService {
 
 
     public List<LessonDto> getAll() {
-        List<LessonEntity> all = lessonRepository.findAll();
-        List<LessonDto> list = all.stream()
+        List<Lesson> all = lessonRepository.findAll();
+        return all.stream()
                 .map(item -> modelMapper.map(item,LessonDto.class))
                 .toList();
-        return  list;
     }
-    public String create( LessonDto lessonDto) {
-        LessonEntity map=modelMapper.map(lessonDtos,LessonEntity.class);
-
-        lessonRepository.save(map);
-        return "Lesson created successfully";
+    public LessonDto create( LessonDto lessonDto) {
+        Lesson map=modelMapper.map(lessonDto, Lesson.class);
+        return  modelMapper.map(lessonRepository.save(map), LessonDto.class);
     }
 }

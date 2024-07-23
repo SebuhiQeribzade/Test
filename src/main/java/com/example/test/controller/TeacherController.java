@@ -21,8 +21,8 @@ public class TeacherController {
         return teacherService.getAll();
     }
     @PostMapping("/create")
-    public String createLesson(@RequestBody TeacherDto teacherDto){
-        teacherService.create(teacherDto);
-        return "Teacher created";
+    public TeacherDto createLesson(@RequestBody TeacherDto teacherDto){
+      return   teacherService.create(teacherDto);
+
     }
 }
