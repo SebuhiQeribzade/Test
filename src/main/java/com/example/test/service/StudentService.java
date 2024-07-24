@@ -2,7 +2,7 @@ package com.example.test.service;
 
 import com.example.test.Entity.Lesson;
 import com.example.test.Entity.Student;
-import com.example.test.Entity.TeacherEntity;
+import com.example.test.Entity.Teacher;
 import com.example.test.dto.StudentRequestDto;
 import com.example.test.dto.StudentResponseDto;
 import com.example.test.repository.LessonRepository;
@@ -34,14 +34,14 @@ public String create( StudentRequestDto studentRequestDto) {
     Student student = modelMapper.map(studentRequestDto, Student.class);
 
     List<Long> teacherIds = studentRequestDto.getTeacherIds();
-    List<TeacherEntity> teachers = new ArrayList<>();
+    List<Teacher> teachers = new ArrayList<>();
     for (Long id : teacherIds) {
-        TeacherEntity teacher = teacherRepository.findById(id).orElseThrow(
+        Teacher teacher = teacherRepository.findById(id).orElseThrow(
                 () -> new RuntimeException("Teacher not found with id: " + id)
         );
         teachers.add(teacher);
     }
-    student.setTeacherEntityList(teachers);
+    student.setTeacherList(teachers);
     List<Lesson> lessons = new ArrayList<>();
     List<Long>lessonIds=studentRequestDto.getLessonIds();
     for (Long id : lessonIds) {

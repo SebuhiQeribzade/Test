@@ -1,5 +1,5 @@
 package com.example.test.service;
-import com.example.test.Entity.TeacherEntity;
+import com.example.test.Entity.Teacher;
 import com.example.test.dto.TeacherDto;
 import com.example.test.repository.TeacherRepository;
 import org.modelmapper.ModelMapper;
@@ -19,14 +19,14 @@ public class TeacherService {
 
 
     public List<TeacherDto> getAll() {
-        List<TeacherEntity> all = teacherRepository.findAll();
+        List<Teacher> all = teacherRepository.findAll();
         List<TeacherDto> list = all.stream()
                 .map(item -> modelMapper.map(item, TeacherDto.class))
                 .toList();
         return  list;
     }
     public TeacherDto create( TeacherDto teacherDto) {
-        TeacherEntity map=modelMapper.map(teacherDto,TeacherEntity.class);
+        Teacher map=modelMapper.map(teacherDto, Teacher.class);
 
       return  modelMapper.map(teacherRepository.save(map),TeacherDto.class);
 

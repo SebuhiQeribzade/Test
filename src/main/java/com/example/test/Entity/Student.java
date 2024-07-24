@@ -19,9 +19,19 @@ public class Student {
     @Column(name="age")
     private Integer age;
 
-    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "students")
-    private List<Lesson> lessonList;
+    @ManyToMany
+    @JoinTable(
+            name = "student_lesson",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "lesson_id")
+    )
+        private List<Lesson> lessonList;
 
-    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "students")
-    private List<TeacherEntity> teacherEntityList;
+    @ManyToMany
+    @JoinTable(
+            name = "student_teacher",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "teacher_id")
+    )
+        private List<Teacher> teacherList;
 }
