@@ -1,25 +1,26 @@
 package com.example.test.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Table(name="lesson")
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 public class Lesson {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
     @Column(name = "name")
     private String name;
 
-    @ManyToMany
-    List<Student> students=new ArrayList<>();
+    @ManyToMany(mappedBy = "lessonList")
+    @JsonIgnore
+    private List<Student> students;
 }

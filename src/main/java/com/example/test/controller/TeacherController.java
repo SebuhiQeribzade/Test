@@ -1,8 +1,7 @@
 package com.example.test.controller;
 
-import com.example.test.dto.LessonDto;
-import com.example.test.dto.TeacherDto;
-import com.example.test.service.LessonService;
+import com.example.test.dto.request.TeacherRequestDto;
+import com.example.test.dto.response.TeacherResponseDto;
 import com.example.test.service.TeacherService;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,12 +16,12 @@ public class TeacherController {
         this.teacherService = teacherService;
     }
     @GetMapping("/getAll")
-    public List<TeacherDto> getteacher(){
+    public List<TeacherResponseDto> getteacher(){
         return teacherService.getAll();
     }
     @PostMapping("/create")
-    public TeacherDto createLesson(@RequestBody TeacherDto teacherDto){
-      return   teacherService.create(teacherDto);
+    public TeacherResponseDto createLesson(@RequestBody TeacherRequestDto teacherRequestDto){
+      return   teacherService.create(teacherRequestDto);
 
     }
 }

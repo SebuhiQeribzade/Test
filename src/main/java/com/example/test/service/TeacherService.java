@@ -1,11 +1,12 @@
 package com.example.test.service;
 import com.example.test.Entity.Teacher;
-import com.example.test.dto.TeacherDto;
+import com.example.test.dto.request.TeacherRequestDto;
+import com.example.test.dto.response.TeacherResponseDto;
 import com.example.test.repository.TeacherRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+
 import java.util.List;
 @Service
 public class TeacherService {
@@ -15,20 +16,15 @@ public class TeacherService {
         this.teacherRepository = teacherRepository;
         this.modelMapper = modelMapper;
     }
-    List<TeacherDto> teacherDtos = new ArrayList<>();
 
-
-    public List<TeacherDto> getAll() {
+    public List<TeacherResponseDto> getAll() {
         List<Teacher> all = teacherRepository.findAll();
-        List<TeacherDto> list = all.stream()
-                .map(item -> modelMapper.map(item, TeacherDto.class))
+        return all.stream()
+                .map(item -> modelMapper.map(item, TeacherResponseDto.class))
                 .toList();
-        return  list;
     }
-    public TeacherDto create( TeacherDto teacherDto) {
-        Teacher map=modelMapper.map(teacherDto, Teacher.class);
-
-      return  modelMapper.map(teacherRepository.save(map),TeacherDto.class);
-
+    public TeacherResponseDto create(TeacherRequestDto teacherRequestDto) {
+        Teacher map=modelMapper.map(teacherRequestDto, Teacher.class);
+      return  modelMapper.map(teacherRepository.save(map), TeacherResponseDto.class);
     }
 }

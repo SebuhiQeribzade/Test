@@ -3,8 +3,8 @@ package com.example.test.service;
 import com.example.test.Entity.Lesson;
 import com.example.test.Entity.Student;
 import com.example.test.Entity.Teacher;
-import com.example.test.dto.StudentRequestDto;
-import com.example.test.dto.StudentResponseDto;
+import com.example.test.dto.request.StudentRequestDto;
+import com.example.test.dto.response.StudentResponseDto;
 import com.example.test.repository.LessonRepository;
 import com.example.test.repository.StudentRepository;
 import com.example.test.repository.TeacherRepository;
@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -28,54 +29,49 @@ public class StudentService {
         List<StudentResponseDto> list = all.stream()
                 .map(item -> modelMapper.map(item, StudentResponseDto.class))
                 .toList();
-       return  list;
-}
-public String create( StudentRequestDto studentRequestDto) {
-    Student student = modelMapper.map(studentRequestDto, Student.class);
-
-    List<Long> teacherIds = studentRequestDto.getTeacherIds();
-    List<Teacher> teachers = new ArrayList<>();
-    for (Long id : teacherIds) {
-        Teacher teacher = teacherRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Teacher not found with id: " + id)
-        );
-        teachers.add(teacher);
+        return list;
     }
-    student.setTeacherList(teachers);
-    List<Lesson> lessons = new ArrayList<>();
-    List<Long>lessonIds=studentRequestDto.getLessonIds();
-    for (Long id : lessonIds) {
-        Lesson lesson = lessonRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Teacher not found with id: " + id)
-        );
-        lessons.add(lesson);
+
+    public void create (StudentRequestDto dto) {
+        Student student = modelMapper.map(dto, Student.class);
+
+        List<Lesson> lessons = new ArrayList<>();
+        List<Long> lessonIds = dto.getLessonIds();
+        for (Long id : lessonIds) {
+            Lesson byId = lessonRepository.findById(id).orElseThrow();
+            lessons.add(byId);
+        }
+
+        List<Teacher> teachers = new ArrayList<>();
+        List<Long> teacherIds = dto.getTeacherIds();
+        for (Long id : teacherIds) {
+            Teacher byId = teacherRepository.findById(id).orElseThrow();
+            teachers.add(byId);
+        }
+
+        student.setLessonList(lessons);
+        student.setTeacherList(teachers);
+        studentRepository.save(student);
     }
-    student.setLessonList(lessons);
-    studentRepository.save(student);
-    return "success";
-}
+    public StudentResponseDto findById(Long id) {
+        Student student = studentRepository.findById(id).orElseThrow();
+        StudentResponseDto map = modelMapper.map(student, StudentResponseDto.class);
+        return map;
+    }
 
 
-public StudentResponseDto findById(Long id) {
-    Student student = studentRepository.findById(id).orElseThrow();
-    StudentResponseDto map=modelMapper.map(student, StudentResponseDto.class);
-    return map;
-}
+    public String delete(Long studentId) {
+        Student student = studentRepository.findById(studentId).orElseThrow();
+        studentRepository.delete(student);
+        return "Student deleted successfully";
+    }
 
+    public String update(Long id, StudentRequestDto studentRequestDto) {
+        Student student = studentRepository.findById(id).orElseThrow();
+        modelMapper.map(studentRequestDto, student);
+        studentRepository.save(student);
 
-
-
-public String delete( Long studentId) {
-    Student student = studentRepository.findById(studentId).orElseThrow();
-    studentRepository.delete(student);
-    return "Student deleted successfully" ;
-}
-    public String update(Long id,  StudentRequestDto studentRequestDto) {
-    Student student = studentRepository.findById(id).orElseThrow();
-    modelMapper.map(studentRequestDto, student);
-    studentRepository.save(student);
-
-    return "Student updated successfully" ;
-}
+        return "Student updated successfully";
+    }
 
 }

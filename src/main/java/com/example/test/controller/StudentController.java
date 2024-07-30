@@ -1,7 +1,7 @@
 package com.example.test.controller;
 
-import com.example.test.dto.StudentRequestDto;
-import com.example.test.dto.StudentResponseDto;
+import com.example.test.dto.request.StudentRequestDto;
+import com.example.test.dto.response.StudentResponseDto;
 import com.example.test.service.StudentService;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,8 +24,8 @@ public class StudentController {
 
     }
     @PostMapping("/create")
-    public String createStudent(@RequestBody StudentRequestDto studentRequestDto){
-   return studentService.create(studentRequestDto);
+    public void createStudent(@RequestBody StudentRequestDto studentRequestDto){
+    studentService.create(studentRequestDto);
     }
 
     @GetMapping("/findById")
