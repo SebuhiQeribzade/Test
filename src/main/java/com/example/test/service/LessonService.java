@@ -30,4 +30,10 @@ public class LessonService {
         Lesson map=modelMapper.map(lessonRequestDto, Lesson.class);
         return  modelMapper.map(lessonRepository.save(map), LessonResponseDto.class);
     }
+
+
+    public String checkName (String name,String surname){
+        return name+surname;
+    }
+
 }
