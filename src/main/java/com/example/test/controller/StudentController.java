@@ -37,7 +37,7 @@ public class StudentController {
 
     @DeleteMapping("/delete")
     public String deleteStudent(@RequestBody StudentResponseDto studentResponseDto){
-return studentService.delete(studentResponseDto.getId());
+    return studentService.delete(studentResponseDto.getId());
 
     }
     @PutMapping("/update{id}")

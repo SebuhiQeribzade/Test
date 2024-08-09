@@ -4,20 +4,17 @@ import com.example.test.Entity.Lesson;
 import com.example.test.dto.request.LessonRequestDto;
 import com.example.test.dto.response.LessonResponseDto;
 import com.example.test.repository.LessonRepository;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class LessonService {
     private final LessonRepository lessonRepository;
     private final ModelMapper modelMapper;
-
-    public LessonService(LessonRepository lessonRepository, ModelMapper modelMapper) {
-        this.lessonRepository = lessonRepository;
-        this.modelMapper = modelMapper;
-    }
 
 
     public List<LessonResponseDto> getAll() {
